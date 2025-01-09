@@ -7,5 +7,9 @@
 </head>
 <body>
     <h1>Bienvenid@ <?php if(isset($nUsu)) echo $nUsu ?></h1>
+
+    <form action="index.php?action=cerrar" method="post">
+        <input type="submit" value="Cerrar Sesion" name="cerrar">
+    </form>
 </body>
 </html>
