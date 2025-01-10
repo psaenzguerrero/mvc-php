@@ -1,25 +1,36 @@
 <?php
-    class db{
-        private $conn;
-
-        public function __construct(){
-            $this->conn =  new mysqli("localhost","root","","usuarios");
+    function set_cookie(String $nom, $val){
+        setcookie($nom, $val, time()+(86400*30));
+    }
+    function unset_coockie(String $nom){
+        $comp = false ;
+        if (isset($_COOKIE[$nom])) {
+            setcookie($nom, '',time()-30);
+            $comp = true;
         }
-        public function compCredenciales(String $nom, String $psw){
-            $sentencia = "SELECT COUNT(*) FROM usuario WHERE nombre=? AND contrasena=?";
-            $consulta = $this->conn->prepare($sentencia);
-            $consulta->bind_param("ss", $nom, $psw);
-            $consulta->bind_result($count);
-            $consulta->execute();
-            $consulta->fetch();
-            
-            $existe = false;
-
-            if ($count == 1) $existe=true;
-
-            $consulta->close();
-
-            return $existe;
+        return $comp;
+    }
+    function set_session(String $nom, $val){
+        start_session();
+        $_SESSION[$nom]=$val;
+    }
+    function get_session(String $nom){
+        start_session();
+        return $_SESSION[$nom];
+    }
+    function unset_session(){
+        start_session();
+        session_unset();
+        session_destroy();
+    }
+    function start_session(){
+        if ((session_status()=== PHP_SESSION_NONE)) {
+            session_start();
         }
+    }
+    function is_session(String $nom){
+        start_session();
+        $isset = isset($_SESSION[$nom]);
+        return $isset;
     }
 ?>
