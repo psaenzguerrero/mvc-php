@@ -3,7 +3,8 @@
         private $conn;
 
         public function __construct(){
-            $this->conn =  new mysqli("localhost","root","","usuarios");
+            require_once('../../cred.php');
+            $this->conn =  new mysqli("localhost",USU_CONN,PSW_CONN,"usuarios");
         }
         public function compCredenciales(String $nom, String $psw){
             $sentencia = "SELECT COUNT(*) FROM usuario WHERE nombre=? AND contrasena=?";
